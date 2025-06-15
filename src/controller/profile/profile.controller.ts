@@ -1,8 +1,10 @@
 import express from 'express';
 import { authenticationToken } from '../../middleware/auth/auth.middleware';
-import { createProfile } from '../../service/impl/profile/createProfile/createProfile.md';
+import { createProfile } from '../../service/impl/profile/createProfile/createProfile.impl';
 import { validate } from '../../middleware/globalValidator/globalValidator.md';
 import { validateProfileRegistration } from '../../utils/validators.md';
+import { fetchProfiles } from '../../service/impl/profile/fetchprofiles/fetchProfiles.impl';
 const router = express.Router();
 router.post('/create-profile', authenticationToken, validate(validateProfileRegistration), createProfile);
+router.get('/fetch-profiles', authenticationToken, fetchProfiles);
 export default router;
