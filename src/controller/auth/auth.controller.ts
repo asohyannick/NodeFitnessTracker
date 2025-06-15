@@ -7,10 +7,12 @@ import { login } from '../../service/impl/auth/login/login.impl';
 import { fetchUsers } from '../../service/impl/auth/fetchUsers/fetchUsers.impl';
 import { fetchUser } from '../../service/impl/auth/fetchUser/fetchUser.impl';
 import { updateUser } from '../../service/impl/auth/updateUser/updateUser.impl';
+import { deleteUser } from '../../service/impl/auth/deleteUser/deleteUser.impl';
 const router = express.Router();
 router.post('/register', authenticationToken, validate(validateUserRegistration), register);
 router.post('/login', authenticationToken, validate(validateUserLogin), login);
 router.get('/fetch-users', authenticationToken, fetchUsers);
 router.get('/fetch-user/:id', authenticationToken, fetchUser);
-router.put('/update-user/:id', authenticationToken, validate(validateUserAccountUpdate), updateUser)
+router.put('/update-user/:id', authenticationToken, validate(validateUserAccountUpdate), updateUser);
+router.delete('/delete-user/:id', authenticationToken, deleteUser);
 export default router;
