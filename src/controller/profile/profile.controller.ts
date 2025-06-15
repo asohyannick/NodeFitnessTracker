@@ -4,7 +4,9 @@ import { createProfile } from '../../service/impl/profile/createProfile/createPr
 import { validate } from '../../middleware/globalValidator/globalValidator.md';
 import { validateProfileRegistration } from '../../utils/validators.md';
 import { fetchProfiles } from '../../service/impl/profile/fetchprofiles/fetchProfiles.impl';
+import { fetchProfile } from '../../service/impl/profile/fetchProfile/fetchProfile.impl';
 const router = express.Router();
 router.post('/create-profile', authenticationToken, validate(validateProfileRegistration), createProfile);
 router.get('/fetch-profiles', authenticationToken, fetchProfiles);
+router.get('/fetch-profile/:id', authenticationToken, fetchProfile);
 export default router;
