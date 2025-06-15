@@ -8,6 +8,7 @@ import compression from 'compression';
 import morgan from 'morgan';
 // Routes
 import authRoute from './controller/auth/auth.controller';
+import profileRoute from './controller/profile/profile.controller';
 const app: Application = express();
 // General Application Built-in Middleware 
 app.use(express.json());
@@ -24,6 +25,8 @@ if (process.env.NODE_ENV as string === 'development') {
 
 // Routes
 app.use(`/api/${process.env.API_VERSION as string}/auth`, authRoute);
+app.use(`/api/${process.env.API_VERSION as string}/profile`, profileRoute);
+
 const APP_NAME: string = process.env.APP_NAME || 'NodeFitnessTracker'
 const APP_PORT: number | string = parseInt(process.env.APP_PORT  || '8000', 10);
 const API_VERSION: string | number = process.env.API_VERSION || 'v1';
