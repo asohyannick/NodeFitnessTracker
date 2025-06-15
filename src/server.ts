@@ -1,10 +1,39 @@
-import express, { Request, Response, Application} from 'express';
+import 'dotenv/config';
+// DB 
+import connectedToMongoDB from './config/dbConfig/databaseConfig.db';
+import express, { Application} from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import compression from 'compression';
+import morgan from 'morgan';
 const app: Application = express();
+// General Application Built-in Middleware 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-app.get('/test', (_req: Request, res:Response) => {
-    res.status(200).json({message: "Hello world"})
-})
-app.listen(3000, () => {
-    console.log('Server is running on port 3000...')
-})
+
+//security middleware packages
+app.use(cors());
+app.use(helmet());
+app.use(compression());
+// Custom Application Middleware 
+if (process.env.NODE_ENV as string === 'development') {
+    app.use(morgan('dev'));
+}
+
+// Route
+const APP_NAME: string = process.env.APP_NAME || 'NodeFitnessTracker'
+const APP_PORT: number | string = parseInt(process.env.APP_PORT  || '8000', 10);
+const API_VERSION: string | number = process.env.API_VERSION || 'v1';
+const APP_HOST: string | number = process.env.APP_HOST || 'localhost';
+async function serve() {
+    try {
+        await connectedToMongoDB(),
+        app.listen(APP_PORT, () => {
+        console.log(`Server is running on ${APP_HOST} port ${APP_PORT} on api ${API_VERSION} owned by ${APP_NAME}`)
+    })
+    } catch (error) {
+        console.error('Failed to connect to the database');
+    }
+}
+
+serve();
