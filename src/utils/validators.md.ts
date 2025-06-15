@@ -7,6 +7,11 @@ const validateUserRegistration = Yup.object().shape({
     isAdmin: Yup.boolean().required('Admin status must be provided')
 });
 
+const validateUserLogin= Yup.object().shape({
+    email: Yup.string().email("Email must be provided").required("Email must be provided").trim(),
+    password: Yup.string().required("Password must be provided").trim().min(2),
+});
 export { 
-    validateUserRegistration
+    validateUserRegistration,
+    validateUserLogin
 }
