@@ -2,13 +2,15 @@ import express from 'express';
 import { register } from '../../service/impl/auth/register/register.impl';
 import { authenticationToken } from '../../middleware/auth/auth.middleware';
 import { validate } from '../../middleware/globalValidator/globalValidator.md';
-import { validateUserLogin, validateUserRegistration } from '../../utils/validators.md';
+import { validateUserAccountUpdate, validateUserLogin, validateUserRegistration } from '../../utils/validators.md';
 import { login } from '../../service/impl/auth/login/login.impl';
 import { fetchUsers } from '../../service/impl/auth/fetchUsers/fetchUsers.impl';
 import { fetchUser } from '../../service/impl/auth/fetchUser/fetchUser.impl';
+import { updateUser } from '../../service/impl/auth/updateUser/updateUser.impl';
 const router = express.Router();
 router.post('/register', authenticationToken, validate(validateUserRegistration), register);
 router.post('/login', authenticationToken, validate(validateUserLogin), login);
-router.get('/fetch-users', fetchUsers);
-router.get('/fetch-user/:id', fetchUser);
+router.get('/fetch-users', authenticationToken, fetchUsers);
+router.get('/fetch-user/:id', authenticationToken, fetchUser);
+router.put('/update-user/:id', authenticationToken, validate(validateUserAccountUpdate), updateUser)
 export default router;
