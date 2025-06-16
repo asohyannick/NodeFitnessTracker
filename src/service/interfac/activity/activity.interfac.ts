@@ -12,7 +12,7 @@ export enum MoodStatus {
 }
 
 export interface IActivityInterfac extends Document {
-    _id: Types.ObjectId;
+    userId: Types.ObjectId;
     type: string;
     duration: number; 
     caloriesBurned: number;

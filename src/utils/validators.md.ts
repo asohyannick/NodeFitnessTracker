@@ -1,6 +1,7 @@
 import * as Yup from 'yup';
 import { MaritalStatus } from '../service/interfac/profile/profile.interfac';
 import { InstensityStatus, MoodStatus } from '../service/interfac/activity/activity.interfac';
+import { FrequencyStatus, GoalStatus } from '../service/interfac/goal/goal.interfac';
 const validateUserRegistration = Yup.object().shape({
     firstName: Yup.string().required("FirstName must be provided").trim().min(2),
     lastName: Yup.string().required("lastName must be provided").trim().min(2),
@@ -9,7 +10,7 @@ const validateUserRegistration = Yup.object().shape({
     isAdmin: Yup.boolean().required('Admin status must be provided')
 });
 
-const validateUserLogin= Yup.object().shape({
+const validateUserLogin = Yup.object().shape({
     email: Yup.string().email("Email must be provided").required("Email must be provided").trim(),
     password: Yup.string().required("Password must be provided").trim().min(2),
 });
@@ -87,16 +88,32 @@ const validateUpdatedActivityCreation = Yup.object().shape({
         .required("One value must be provided")
         .oneOf(Object.values(MoodStatus)), // Validates against the enum values
     date: Yup.date().required("Date must be provided")
+});
+
+const validateGoalCreation = Yup.object().shape({
+    type: Yup.string().required("Type must be provided").trim().min(2),
+    target: Yup.number().required("Target value must be provided").min(2.).integer(),
+    currentProgress: Yup.number().required("Current Progress value must be provided").min(2).integer(),
+    deadline: Yup.date().required("Deadline must be provided"),
+    status: Yup.mixed()
+        .required("One value must be provided")
+        .oneOf(Object.values(GoalStatus)), // Validates against the enum values
+    frequency: Yup.mixed()
+        .required("One value must be provided")
+        .oneOf(Object.values(FrequencyStatus)), // Validates against the enum values
+    notes: Yup.string().required("Notes must be provided").trim().min(6, "Notes must be at least 6 characters long"),
+    milestones: Yup.array().of(Yup.string().trim()).required('Milestones must be provided').min(1),
 
 });
 
 
-export { 
+export {
     validateUserRegistration,
     validateUserLogin,
     validateUserAccountUpdate,
     validateProfileRegistration,
     validateUpdatedProfileRegistration,
     validateActivityCreation,
-    validateUpdatedActivityCreation
+    validateUpdatedActivityCreation,
+    validateGoalCreation
 }

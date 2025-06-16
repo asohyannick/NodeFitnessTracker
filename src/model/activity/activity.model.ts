@@ -1,6 +1,11 @@
 import { IActivityInterfac, InstensityStatus, MoodStatus } from '../../service/interfac/activity/activity.interfac';
-import mongoose, {Schema } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 const activitySchema: Schema = new Schema<IActivityInterfac>({
+userId:{
+    type: Schema.Types.ObjectId,
+    ref: 'Auth',
+    required: true,
+},
 type:{
     type: String,
     trim: true,
