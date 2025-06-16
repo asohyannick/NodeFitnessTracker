@@ -6,9 +6,11 @@ import { validateGoalCreation, validateUpdatedGoal } from '../../utils/validator
 import { showGoals } from '../../service/impl/goal/showGoals/showGoals.impl';
 import { showGoal } from '../../service/impl/goal/showGoal/showGoal.impl';
 import { editAndUpdateGoal } from '../../service/impl/goal/updateGoal/updateGoal.impl';
+import { deleteGoal } from '../../service/impl/goal/deleteGoal/removeGoal.impl';
 const router = express.Router();
 router.post('/set-goal', authenticationToken, validate(validateGoalCreation), setGoal);
 router.get('/show-goals', authenticationToken, showGoals);
 router.get('/show-goal/:id', authenticationToken, showGoal);
 router.put('/update-goal/:id', authenticationToken, validate(validateUpdatedGoal), editAndUpdateGoal);
+router.delete('/delete-goal/:id', authenticationToken, deleteGoal);
 export default router;
