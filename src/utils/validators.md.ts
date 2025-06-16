@@ -71,6 +71,25 @@ const validateActivityCreation = Yup.object().shape({
 
 });
 
+const validateUpdatedActivityCreation = Yup.object().shape({
+    type: Yup.string().required("Type must be provided").trim().min(2),
+    duration: Yup.number().required("Duration value must be provided").min(2.).integer(),
+    caloriesBurned: Yup.number().required("Calories burned value must be provided").min(2).integer(),
+    notes: Yup.string().required("Notes must be provided").trim().min(6, "Notes must be at least 6 characters long"),
+    location: Yup.string().required('Location must be provided').trim(),
+    intensity: Yup.mixed()
+        .required("One value must be provided")
+        .oneOf(Object.values(InstensityStatus)), // Validates against the enum values
+    heartRate: Yup.number().required("Heart rate value must be provided").min(2).integer(),
+    distance: Yup.number().required("Distance value must be provided").min(2).integer(),
+    equipments: Yup.array().of(Yup.string().trim()).required('Equipments must be provided').min(1),
+    mood: Yup.mixed()
+        .required("One value must be provided")
+        .oneOf(Object.values(MoodStatus)), // Validates against the enum values
+    date: Yup.date().required("Date must be provided")
+
+});
+
 
 export { 
     validateUserRegistration,
@@ -78,5 +97,6 @@ export {
     validateUserAccountUpdate,
     validateProfileRegistration,
     validateUpdatedProfileRegistration,
-    validateActivityCreation
+    validateActivityCreation,
+    validateUpdatedActivityCreation
 }
