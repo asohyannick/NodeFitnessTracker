@@ -12,6 +12,7 @@ import profileRoute from './controller/profile/profile.controller';
 import activityRoute from './controller/activity/activity.controller';
 import goalRoute from './controller/goal/goal.controller';
 import nutritionRoute from './controller/nutrition/nutrition.controller';
+import sleepRoute from './controller/sleep/sleep.controller'
 const app: Application = express();
 // General Application Built-in Middleware 
 app.use(express.json());
@@ -32,10 +33,11 @@ app.use(`/api/${process.env.API_VERSION as string}/profile`, profileRoute);
 app.use(`/api/${process.env.API_VERSION as string}/activity`, activityRoute);
 app.use(`/api/${process.env.API_VERSION as string}/goal`, goalRoute);
 app.use(`/api/${process.env.API_VERSION as string}/nutrition`, nutritionRoute);
+app.use(`/api/${process.env.API_VERSION as string}/sleep`, sleepRoute);
 
 
 const APP_NAME: string = process.env.APP_NAME || 'NodeFitnessTracker'
-const APP_PORT: number | string = parseInt(process.env.APP_PORT  || '8000', 10);
+const APP_PORT: number | string = parseInt(process.env.APP_PORT  || '8080', 10);
 const API_VERSION: string | number = process.env.API_VERSION || 'v1';
 const APP_HOST: string | number = process.env.APP_HOST || 'localhost';
 async function serve() {
