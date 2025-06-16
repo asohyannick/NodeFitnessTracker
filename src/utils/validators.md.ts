@@ -203,8 +203,16 @@ const validateCreatedChallenge = Yup.object().shape({
     status: Yup.mixed().required('One value must be provided').oneOf(Object.values(ChallengeStatus)),
     goals: Yup.array().required("Goals to resolve the challenge must be provided").of(Yup.string().trim()),
     rewards: Yup.array().required("Rewards must be provided for resolving the challenge").of(Yup.string().trim()),
+});
 
-
+const validateUpdatedChallenge = Yup.object().shape({
+    title: Yup.string().required("Title must provided").trim().min(2),
+    description: Yup.string().required("Description must provided").trim().min(2),
+    startDate: Yup.date().required("Challenge start date must be provided"),
+    endDate: Yup.date().required("Challenge end date must be provided"), //  Time the user woke up
+    status: Yup.mixed().required('One value must be provided').oneOf(Object.values(ChallengeStatus)),
+    goals: Yup.array().required("Goals to resolve the challenge must be provided").of(Yup.string().trim()),
+    rewards: Yup.array().required("Rewards must be provided for resolving the challenge").of(Yup.string().trim()),
 });
 
 export {
@@ -223,5 +231,6 @@ export {
     validateUpdatedSleepCalendar,
     validateWorkoutPlan,
     validateUpdatedWorkoutPlan,
-    validateCreatedChallenge
+    validateCreatedChallenge,
+    validateUpdatedChallenge
 }
