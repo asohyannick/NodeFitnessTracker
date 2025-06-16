@@ -3,6 +3,8 @@ import { authenticationToken } from '../../middleware/auth/auth.middleware';
 import { createActivity } from '../../service/impl/activity/createActivity/createActivity.impl';
 import { validate } from '../../middleware/globalValidator/globalValidator.md';
 import { validateActivityCreation } from '../../utils/validators.md';
+import { showActivities } from '../../service/impl/activity/showActivities/showActivities.impl';
 const router = express.Router();
 router.post('/create-activity', authenticationToken, validate(validateActivityCreation), createActivity);
+router.get('/show-activities', authenticationToken, showActivities);
 export default router;
