@@ -6,6 +6,7 @@ import { MealStatus } from '../service/interfac/nutrition/nutrition.interfac';
 import { SleepProblemStatus, SleepQualityStatus } from '../service/interfac/sleep/sleep.interfac';
 import { WorkoutGoalPlanStatus } from '../service/interfac/workoutPlan/workoutPlan.interfac';
 import { ChallengeStatus } from '../service/interfac/challenge/challenge.interfac';
+import { DeviceStatus } from '../service/interfac/device/device.interfac';
 const validateUserRegistration = Yup.object().shape({
     firstName: Yup.string().required("FirstName must be provided").trim().min(2),
     lastName: Yup.string().required("lastName must be provided").trim().min(2),
@@ -207,12 +208,24 @@ const validateCreatedChallenge = Yup.object().shape({
 
 const validateUpdatedChallenge = Yup.object().shape({
     title: Yup.string().required("Title must provided").trim().min(2),
-    description: Yup.string().required("Description must provided").trim().min(2),
+    description: Yup.string().required("Description must be provided").trim().min(2),
     startDate: Yup.date().required("Challenge start date must be provided"),
     endDate: Yup.date().required("Challenge end date must be provided"), //  Time the user woke up
     status: Yup.mixed().required('One value must be provided').oneOf(Object.values(ChallengeStatus)),
     goals: Yup.array().required("Goals to resolve the challenge must be provided").of(Yup.string().trim()),
     rewards: Yup.array().required("Rewards must be provided for resolving the challenge").of(Yup.string().trim()),
+});
+
+const validateCreatedDevice = Yup.object().shape({
+    deviceName: Yup.string().required("Device name must be provided").trim().min(2),
+    deviceType: Yup.string().required("Device type mustbe  provided").trim().min(2),
+    registeredAt: Yup.date().required("Registered date of the device must be provided"),
+    serialNumber: Yup.string().required("Serial number  must be  provided").trim().min(2),
+    model: Yup.string().required("Model  must be  provided").trim().min(2),
+    manucfacturer: Yup.string().required("Manucfacturer must be  provided").trim().min(2),
+    lastSync: Yup.date().required("Last sync date must be provided"), //  Time the user woke up
+    batteryLevel: Yup.number().required('Battery level value must be provided').integer(),
+    status: Yup.mixed().required('One value must be provided').oneOf(Object.values(DeviceStatus)),
 });
 
 export {
@@ -232,5 +245,6 @@ export {
     validateWorkoutPlan,
     validateUpdatedWorkoutPlan,
     validateCreatedChallenge,
-    validateUpdatedChallenge
+    validateUpdatedChallenge,
+    validateCreatedDevice
 }
