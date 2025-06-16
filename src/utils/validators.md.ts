@@ -2,6 +2,7 @@ import * as Yup from 'yup';
 import { MaritalStatus } from '../service/interfac/profile/profile.interfac';
 import { InstensityStatus, MoodStatus } from '../service/interfac/activity/activity.interfac';
 import { FrequencyStatus, GoalStatus } from '../service/interfac/goal/goal.interfac';
+import { MealStatus } from '../service/interfac/nutrition/nutrition.interfac';
 const validateUserRegistration = Yup.object().shape({
     firstName: Yup.string().required("FirstName must be provided").trim().min(2),
     lastName: Yup.string().required("lastName must be provided").trim().min(2),
@@ -120,6 +121,20 @@ const validateUpdatedGoal = Yup.object().shape({
     milestones: Yup.array().of(Yup.string().trim()).required('Milestones must be provided').min(1),
 });
 
+const validateNutritionCreation = Yup.object().shape({
+    foodItem: Yup.string().required("Food item must provided").trim().min(2),
+    calories: Yup.string().required("Calories must provided").trim().min(2),
+    protein: Yup.number().required('Protein value must be provided').integer(),
+    carbs: Yup.number().required('Carbs value must be provided').integer(),
+    fats: Yup.number().required('Fats value must be provided').integer(),
+    date: Yup.date().required('Date value must be provided'),
+    notes: Yup.string().required("Notes must provided").trim().min(2),
+    servingSize: Yup.number().required('ServingSize value must be provided').integer(),
+    mealType: Yup.mixed().required('One value must be provided').oneOf(Object.values(MealStatus)),
+    fiber: Yup.number().required('Fiber value must be provided').integer(),
+    sugar: Yup.number().required('Sugar value must be provided').integer(),
+    sodium: Yup.number().required('Sodium value must be provided').integer(),
+})
 
 export {
     validateUserRegistration,
@@ -130,5 +145,6 @@ export {
     validateActivityCreation,
     validateUpdatedActivity,
     validateGoalCreation,
-    validateUpdatedGoal
+    validateUpdatedGoal,
+    validateNutritionCreation
 }
