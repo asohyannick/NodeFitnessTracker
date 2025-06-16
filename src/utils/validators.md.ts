@@ -4,6 +4,7 @@ import { InstensityStatus, MoodStatus } from '../service/interfac/activity/activ
 import { FrequencyStatus, GoalStatus } from '../service/interfac/goal/goal.interfac';
 import { MealStatus } from '../service/interfac/nutrition/nutrition.interfac';
 import { SleepProblemStatus, SleepQualityStatus } from '../service/interfac/sleep/sleep.interfac';
+import { WorkoutGoalPlanStatus } from '../service/interfac/workoutPlan/workoutPlan.interfac';
 const validateUserRegistration = Yup.object().shape({
     firstName: Yup.string().required("FirstName must be provided").trim().min(2),
     lastName: Yup.string().required("lastName must be provided").trim().min(2),
@@ -153,7 +154,7 @@ const validateUpdatedNutrition = Yup.object().shape({
 });
 
 const validateSleepCalendar = Yup.object().shape({
-    duration:  Yup.number().required(' Sleep durationvalue must be provided').integer(),
+    duration: Yup.number().required(' Sleep durationvalue must be provided').integer(),
     quality: Yup.mixed().required('One value must be provided').oneOf(Object.values(SleepQualityStatus)),
     date: Yup.date().required("Date must be provided"),
     notes: Yup.string().required("Notes must provided").trim().min(2),
@@ -164,7 +165,7 @@ const validateSleepCalendar = Yup.object().shape({
 });
 
 const validateUpdatedSleepCalendar = Yup.object().shape({
-    duration:  Yup.number().required(' Sleep durationvalue must be provided').integer(),
+    duration: Yup.number().required(' Sleep duration value must be provided').integer(),
     quality: Yup.mixed().required('One value must be provided').oneOf(Object.values(SleepQualityStatus)),
     date: Yup.date().required("Date must be provided"),
     notes: Yup.string().required("Notes must provided").trim().min(2),
@@ -172,6 +173,16 @@ const validateUpdatedSleepCalendar = Yup.object().shape({
     sleepEnd: Yup.date().required("Sleep end date must be provided"), //  Time the user woke up
     interruptions: Yup.number().required('Sleep Interruptions value must be provided').integer(),//  Number of times the user woke up during the night
     sleepDisorders: Yup.mixed().required('One value must be provided').oneOf(Object.values(SleepProblemStatus)), // Optional: Any known sleep disorders
+});
+
+const validateWorkoutPlan = Yup.object().shape({
+    title: Yup.string().required("Title must provided").trim().min(2),
+    description: Yup.string().required("Description must provided").trim().min(2),
+    goal: Yup.mixed().required('One value must be provided').oneOf(Object.values(WorkoutGoalPlanStatus)),
+    exercises: Yup.array().required("Exercises must be provided").of(Yup.string().trim()),
+    duration: Yup.number().required('Workout  duration value must be provided').integer(),
+    date: Yup.date().required("Date must be provided"),
+
 })
 export {
     validateUserRegistration,
@@ -186,5 +197,6 @@ export {
     validateNutritionCreation,
     validateUpdatedNutrition,
     validateSleepCalendar,
-    validateUpdatedSleepCalendar
+    validateUpdatedSleepCalendar,
+    validateWorkoutPlan
 }

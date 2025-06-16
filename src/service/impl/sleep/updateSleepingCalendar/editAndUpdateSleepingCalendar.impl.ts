@@ -27,7 +27,7 @@ const editAndUpdateSleepingCalendar = async (req: Request, res: Response): Promi
         if (!sleepingDuration) {
             return res.status(StatusCodes.NOT_FOUND).json({ message: "Sleeping calender doesn't exist!" })
         }
-        return res.status(StatusCodes.CREATED).json({ message: "Sleeping  calender has been updated successfully", sleepingDuration });
+        return res.status(StatusCodes.OK).json({ message: "Sleeping  calender has been updated successfully", sleepingDuration});
     } catch (error) {
         console.error(error);
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: "Something went wrong!", error });
