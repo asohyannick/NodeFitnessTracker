@@ -182,6 +182,15 @@ const validateWorkoutPlan = Yup.object().shape({
     exercises: Yup.array().required("Exercises must be provided").of(Yup.string().trim()),
     duration: Yup.number().required('Workout  duration value must be provided').integer(),
     date: Yup.date().required("Date must be provided"),
+})
+
+const validateUpdatedWorkoutPlan = Yup.object().shape({
+    title: Yup.string().required("Title must provided").trim().min(2),
+    description: Yup.string().required("Description must provided").trim().min(2),
+    goal: Yup.mixed().required('One value must be provided').oneOf(Object.values(WorkoutGoalPlanStatus)),
+    exercises: Yup.array().required("Exercises must be provided").of(Yup.string().trim()),
+    duration: Yup.number().required('Workout  duration value must be provided').integer(),
+    date: Yup.date().required("Date must be provided"),
 
 })
 export {
@@ -198,5 +207,6 @@ export {
     validateUpdatedNutrition,
     validateSleepCalendar,
     validateUpdatedSleepCalendar,
-    validateWorkoutPlan
+    validateWorkoutPlan,
+    validateUpdatedWorkoutPlan
 }
