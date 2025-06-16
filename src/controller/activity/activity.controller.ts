@@ -4,7 +4,9 @@ import { createActivity } from '../../service/impl/activity/createActivity/creat
 import { validate } from '../../middleware/globalValidator/globalValidator.md';
 import { validateActivityCreation } from '../../utils/validators.md';
 import { showActivities } from '../../service/impl/activity/showActivities/showActivities.impl';
+import { showActivity } from '../../service/impl/activity/showActivity/showActivity.impl';
 const router = express.Router();
 router.post('/create-activity', authenticationToken, validate(validateActivityCreation), createActivity);
 router.get('/show-activities', authenticationToken, showActivities);
+router.get('/show-activity/:id', authenticationToken, showActivity);
 export default router;
