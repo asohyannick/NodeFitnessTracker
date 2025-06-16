@@ -6,9 +6,11 @@ import { showSleepingCalendars } from '../../service/impl/sleep/showSleepingCale
 import { showSleepingCalendar } from '../../service/impl/sleep/showSleepingCalendar/showSleepingCalendar.impl';
 import { setSleepingCalendar } from '../../service/impl/sleep/setSleepingCalendar/setSleepingCalendar.impl';
 import { editAndUpdateSleepingCalendar } from '../../service/impl/sleep/updateSleepingCalendar/editAndUpdateSleepingCalendar.impl';
+import { deleteSleepingCalendar } from '../../service/impl/sleep/deleteSleepingCalendar/deleteSleepingCalendar.impl';
 const router = express.Router();
 router.post('/set-sleeping-calendar', authenticationToken, validate(validateSleepCalendar), setSleepingCalendar);
 router.get('/fetch-sleeping-calendars', authenticationToken, showSleepingCalendars);
 router.get('/fetch-sleeping-calendar/:id', authenticationToken, showSleepingCalendar);
-router.put('/update-sleep-calendar/:id', authenticationToken, validate(validateUpdatedSleepCalendar), editAndUpdateSleepingCalendar)
+router.put('/update-sleep-calendar/:id', authenticationToken, validate(validateUpdatedSleepCalendar), editAndUpdateSleepingCalendar);
+router.delete('/delete-sleeping-calendar/:id', authenticationToken, deleteSleepingCalendar);
 export default router;
