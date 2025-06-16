@@ -228,6 +228,17 @@ const validateCreatedDevice = Yup.object().shape({
     status: Yup.mixed().required('One value must be provided').oneOf(Object.values(DeviceStatus)),
 });
 
+const validateUpdatedDevice = Yup.object().shape({
+    deviceName: Yup.string().required("Device name must be provided").trim().min(2),
+    deviceType: Yup.string().required("Device type mustbe  provided").trim().min(2),
+    registeredAt: Yup.date().required("Registered date of the device must be provided"),
+    serialNumber: Yup.string().required("Serial number  must be  provided").trim().min(2),
+    model: Yup.string().required("Model  must be  provided").trim().min(2),
+    manucfacturer: Yup.string().required("Manucfacturer must be  provided").trim().min(2),
+    lastSync: Yup.date().required("Last sync date must be provided"), //  Time the user woke up
+    batteryLevel: Yup.number().required('Battery level value must be provided').integer(),
+    status: Yup.mixed().required('One value must be provided').oneOf(Object.values(DeviceStatus)),
+});
 export {
     validateUserRegistration,
     validateUserLogin,
@@ -246,5 +257,6 @@ export {
     validateUpdatedWorkoutPlan,
     validateCreatedChallenge,
     validateUpdatedChallenge,
-    validateCreatedDevice
+    validateCreatedDevice,
+    validateUpdatedDevice
 }
