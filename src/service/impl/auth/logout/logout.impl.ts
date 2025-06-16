@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-const logout = async(req: Request, res: Response): Promise<Response> => {
+const logout = async(_req: Request, res: Response): Promise<Response> => {
     try {
         res.cookie('auth', '', {
             httpOnly: true,
