@@ -6,9 +6,11 @@ import { validateCreatedChallenge, validateUpdatedChallenge } from '../../utils/
 import { showChallenges } from '../../service/impl/challenge/showChallenges/showChallenges.impl';
 import { showChallenge } from '../../service/impl/challenge/showChallenge/showChallenge.impl';
 import { editAndUpdateChallenge } from '../../service/impl/challenge/editAndUpdateChallenge/editAndUpdateChallenge.impl';
+import { deleteChallenge } from '../../service/impl/challenge/removeChallenge/deleteChallenge.impl';
 const router = express.Router();
 router.post('/create-challenge', authenticationToken, validate(validateCreatedChallenge), createChallenge);
 router.get('/show-challenges', authenticationToken, showChallenges);
 router.get('/show-challenge/:id', authenticationToken, showChallenge);
 router.put('/update-challenge/:id', authenticationToken, validate(validateUpdatedChallenge), editAndUpdateChallenge);
+router.delete('/delete-challenge/:id', authenticationToken, deleteChallenge);
 export default router;
