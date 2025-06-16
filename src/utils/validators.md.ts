@@ -152,7 +152,18 @@ const validateUpdatedNutrition = Yup.object().shape({
     sodium: Yup.number().required('Sodium value must be provided').integer(),
 });
 
-const validateSleepDuration = Yup.object().shape({
+const validateSleepCalendar = Yup.object().shape({
+    duration:  Yup.number().required(' Sleep durationvalue must be provided').integer(),
+    quality: Yup.mixed().required('One value must be provided').oneOf(Object.values(SleepQualityStatus)),
+    date: Yup.date().required("Date must be provided"),
+    notes: Yup.string().required("Notes must provided").trim().min(2),
+    sleepStart: Yup.date().required("Sleep start date must be provided"),
+    sleepEnd: Yup.date().required("Sleep end date must be provided"), //  Time the user woke up
+    interruptions: Yup.number().required('Sleep Interruptions value must be provided').integer(),//  Number of times the user woke up during the night
+    sleepDisorders: Yup.mixed().required('One value must be provided').oneOf(Object.values(SleepProblemStatus)), // Optional: Any known sleep disorders
+});
+
+const validateUpdatedSleepCalendar = Yup.object().shape({
     duration:  Yup.number().required(' Sleep durationvalue must be provided').integer(),
     quality: Yup.mixed().required('One value must be provided').oneOf(Object.values(SleepQualityStatus)),
     date: Yup.date().required("Date must be provided"),
@@ -174,5 +185,6 @@ export {
     validateUpdatedGoal,
     validateNutritionCreation,
     validateUpdatedNutrition,
-    validateSleepDuration
+    validateSleepCalendar,
+    validateUpdatedSleepCalendar
 }
