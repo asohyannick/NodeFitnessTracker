@@ -3,6 +3,8 @@ import { authenticationToken } from '../../middleware/auth/auth.middleware';
 import { setMeal } from '../../service/impl/nutrition/setNutrition/setNutrition.impl';
 import { validate } from '../../middleware/globalValidator/globalValidator.md';
 import { validateNutritionCreation } from '../../utils/validators.md';
+import { showNutritions } from '../../service/impl/nutrition/showNutritions/showNutrition.impl';
 const router = express.Router();
 router.post('/set-meal', authenticationToken, validate(validateNutritionCreation), setMeal);
+router.get('/show-nutritions', authenticationToken, showNutritions);
 export default router;
