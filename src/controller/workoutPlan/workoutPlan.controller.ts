@@ -4,7 +4,9 @@ import { createWorkoutPlan } from '../../service/impl/workoutPlan/setWorkoutPlan
 import { validate } from '../../middleware/globalValidator/globalValidator.md';
 import { validateWorkoutPlan } from '../../utils/validators.md';
 import { showWorkoutPlans } from '../../service/impl/workoutPlan/showWorkoutPlans/showWorkoutPlans.impl';
+import { showWorkoutPlan } from '../../service/impl/workoutPlan/showWorkoutPlan/showWorkoutPlan.impl';
 const router = express.Router();
 router.post('/create-work-out-plan', authenticationToken, validate(validateWorkoutPlan), createWorkoutPlan);
 router.get('/show-workout-plans', authenticationToken, showWorkoutPlans);
+router.get('/show-workout-plan/:id', authenticationToken, showWorkoutPlan);
 export default router;
