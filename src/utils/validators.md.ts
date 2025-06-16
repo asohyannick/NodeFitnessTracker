@@ -5,6 +5,7 @@ import { FrequencyStatus, GoalStatus } from '../service/interfac/goal/goal.inter
 import { MealStatus } from '../service/interfac/nutrition/nutrition.interfac';
 import { SleepProblemStatus, SleepQualityStatus } from '../service/interfac/sleep/sleep.interfac';
 import { WorkoutGoalPlanStatus } from '../service/interfac/workoutPlan/workoutPlan.interfac';
+import { ChallengeStatus } from '../service/interfac/challenge/challenge.interfac';
 const validateUserRegistration = Yup.object().shape({
     firstName: Yup.string().required("FirstName must be provided").trim().min(2),
     lastName: Yup.string().required("lastName must be provided").trim().min(2),
@@ -192,7 +193,20 @@ const validateUpdatedWorkoutPlan = Yup.object().shape({
     duration: Yup.number().required('Workout  duration value must be provided').integer(),
     date: Yup.date().required("Date must be provided"),
 
-})
+});
+
+const validateCreatedChallenge = Yup.object().shape({
+    title: Yup.string().required("Title must provided").trim().min(2),
+    description: Yup.string().required("Description must provided").trim().min(2),
+    startDate: Yup.date().required("Challenge start date must be provided"),
+    endDate: Yup.date().required("Challenge end date must be provided"), //  Time the user woke up
+    status: Yup.mixed().required('One value must be provided').oneOf(Object.values(ChallengeStatus)),
+    goals: Yup.array().required("Goals to resolve the challenge must be provided").of(Yup.string().trim()),
+    rewards: Yup.array().required("Rewards must be provided for resolving the challenge").of(Yup.string().trim()),
+
+
+});
+
 export {
     validateUserRegistration,
     validateUserLogin,
@@ -208,5 +222,6 @@ export {
     validateSleepCalendar,
     validateUpdatedSleepCalendar,
     validateWorkoutPlan,
-    validateUpdatedWorkoutPlan
+    validateUpdatedWorkoutPlan,
+    validateCreatedChallenge
 }
