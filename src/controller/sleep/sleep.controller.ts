@@ -1,10 +1,12 @@
 import express from 'express';
 import { authenticationToken } from '../../middleware/auth/auth.middleware';
-import { setSleepingDuration } from '../../service/impl/sleep/setSleepingDuration/setSleepingDurtion.impl';
 import { validate } from '../../middleware/globalValidator/globalValidator.md';
 import { validateSleepDuration } from '../../utils/validators.md';
-import { showSleepingDurations } from '../../service/impl/sleep/showSleepingDurations/showSleepingDurations.impl';
+import { showSleepingCalendars } from '../../service/impl/sleep/showSleepingCalendars/showSleepingCalendars.impl';
+import { showSleepingCalendar } from '../../service/impl/sleep/showSleepingCalendar/showSleepingCalendar.impl';
+import { setSleepingCalendar } from '../../service/impl/sleep/setSleepingCalendar/setSleepingCalendar.impl';
 const router = express.Router();
-router.post('/set-sleeping-duration', authenticationToken, validate(validateSleepDuration), setSleepingDuration);
-router.get('/sleeping-durations', authenticationToken, showSleepingDurations);
+router.post('/set-sleeping-calendar', authenticationToken, validate(validateSleepDuration), setSleepingCalendar);
+router.get('/fetch-sleeping-calendars', authenticationToken, showSleepingCalendars);
+router.get('/fetch-sleeping-calendar/:id', authenticationToken, showSleepingCalendar);
 export default router;

@@ -2,7 +2,7 @@ import Sleep from "../../../../model/sleep/sleep.model";
 import { Request, Response } from "express";
 import { SleepQualityStatus, SleepProblemStatus } from "../../../interfac/sleep/sleep.interfac";
 import { StatusCodes } from "http-status-codes";
-const setSleepingDuration = async (req: Request, res: Response): Promise<Response> => {
+const setSleepingCalendar = async (req: Request, res: Response): Promise<Response> => {
     const {
         userId,
         duration,
@@ -22,7 +22,7 @@ const setSleepingDuration = async (req: Request, res: Response): Promise<Respons
             sleepDisorders: SleepProblemStatus.INSOMNIA, // Optional: Any known sleep disorders
         });
         await newSleepingDuration.save();
-        return res.status(StatusCodes.CREATED).json({ message: "New sleeping duration has  been created successfully", newSleepingDuration });
+        return res.status(StatusCodes.CREATED).json({ message: "New sleeping calendar has  been created successfully", newSleepingDuration });
     } catch (error) {
         console.error(error);
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: "Something went wrong!", error });
@@ -30,5 +30,5 @@ const setSleepingDuration = async (req: Request, res: Response): Promise<Respons
 }
 
 export {
-    setSleepingDuration
+    setSleepingCalendar
 }
