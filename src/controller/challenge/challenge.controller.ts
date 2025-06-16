@@ -3,6 +3,8 @@ import { authenticationToken } from '../../middleware/auth/auth.middleware';
 import { createChallenge } from '../../service/impl/challenge/createChallenge/createChallenge.impl';
 import { validate } from '../../middleware/globalValidator/globalValidator.md';
 import { validateCreatedChallenge } from '../../utils/validators.md';
+import { showChallenges } from '../../service/impl/challenge/showChallenges/showChallenges.impl';
 const router = express.Router();
 router.post('/create-challenge', authenticationToken, validate(validateCreatedChallenge), createChallenge);
+router.get('/show-challenges', authenticationToken, showChallenges);
 export default router;
