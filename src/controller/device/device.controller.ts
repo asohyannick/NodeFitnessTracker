@@ -6,10 +6,12 @@ import { validateCreatedDevice, validateUpdatedDevice } from '../../utils/valida
 import { showDevices } from '../../service/impl/device/showDevices/showDevices.impl';
 import { showDevice } from '../../service/impl/device/showDevice/showDevice.impl';
 import { editAndUpdateDevice } from '../../service/impl/device/editAndUpdateDevice/editAndUpdateDevice.impl';
+import { deleteDevice } from '../../service/impl/device/deleteDevice/deleteDevice.impl';
 const router = express.Router();
 router.post('/new-device', authenticationToken, validate(validateCreatedDevice), setDeviceInformation);
 router.get('/show-devices', authenticationToken, showDevices);
 router.get('show-device/:id', authenticationToken, showDevice);
 router.put('/update-device/:id', authenticationToken, validate(validateUpdatedDevice), editAndUpdateDevice);
+router.delete('/delete-device/:id', authenticationToken, deleteDevice);
 
 export default router;
