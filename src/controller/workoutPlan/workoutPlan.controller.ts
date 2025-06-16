@@ -6,9 +6,11 @@ import { validateUpdatedWorkoutPlan, validateWorkoutPlan } from '../../utils/val
 import { showWorkoutPlans } from '../../service/impl/workoutPlan/showWorkoutPlans/showWorkoutPlans.impl';
 import { showWorkoutPlan } from '../../service/impl/workoutPlan/showWorkoutPlan/showWorkoutPlan.impl';
 import { editAndUpdateWorkoutPlan } from '../../service/impl/workoutPlan/editAndUpdateWorkoutPlan/editAndUpdateWorkoutPlan.impl';
+import { deleteWorkoutPlan } from '../../service/impl/workoutPlan/deleteWorkoutPlan/deleteWorkPlan.impl';
 const router = express.Router();
 router.post('/create-work-out-plan', authenticationToken, validate(validateWorkoutPlan), createWorkoutPlan);
 router.get('/show-workout-plans', authenticationToken, showWorkoutPlans);
 router.get('/show-workout-plan/:id', authenticationToken, showWorkoutPlan);
 router.put('/update-workout-plan/:id', authenticationToken, validate(validateUpdatedWorkoutPlan), editAndUpdateWorkoutPlan);
+router.delete('/delete-workout-plan/:id', authenticationToken, deleteWorkoutPlan);
 export default router;
