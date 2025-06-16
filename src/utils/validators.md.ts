@@ -136,6 +136,21 @@ const validateNutritionCreation = Yup.object().shape({
     sodium: Yup.number().required('Sodium value must be provided').integer(),
 })
 
+const validateUpdatedNutrition = Yup.object().shape({
+    foodItem: Yup.string().required("Food item must provided").trim().min(2),
+    calories: Yup.string().required("Calories must provided").trim().min(2),
+    protein: Yup.number().required('Protein value must be provided').integer(),
+    carbs: Yup.number().required('Carbs value must be provided').integer(),
+    fats: Yup.number().required('Fats value must be provided').integer(),
+    date: Yup.date().required('Date value must be provided'),
+    notes: Yup.string().required("Notes must provided").trim().min(2),
+    servingSize: Yup.number().required('ServingSize value must be provided').integer(),
+    mealType: Yup.mixed().required('One value must be provided').oneOf(Object.values(MealStatus)),
+    fiber: Yup.number().required('Fiber value must be provided').integer(),
+    sugar: Yup.number().required('Sugar value must be provided').integer(),
+    sodium: Yup.number().required('Sodium value must be provided').integer(),
+})
+
 export {
     validateUserRegistration,
     validateUserLogin,
@@ -146,5 +161,6 @@ export {
     validateUpdatedActivity,
     validateGoalCreation,
     validateUpdatedGoal,
-    validateNutritionCreation
+    validateNutritionCreation,
+    validateUpdatedNutrition
 }

@@ -2,7 +2,7 @@ import Nutrition from "../../../../model/nutrition/nutrition.model";
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { MealStatus } from "../../../interfac/nutrition/nutrition.interfac";
-const setMeal = async (req: Request, res: Response): Promise<Response> => {
+const setNutrition = async (req: Request, res: Response): Promise<Response> => {
     const {
         userId,
         foodItem,
@@ -44,5 +44,5 @@ const setMeal = async (req: Request, res: Response): Promise<Response> => {
     }
 }
 export {
-    setMeal
+    setNutrition
 }

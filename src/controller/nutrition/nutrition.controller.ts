@@ -1,12 +1,14 @@
 import express from 'express';
 import { authenticationToken } from '../../middleware/auth/auth.middleware';
-import { setMeal } from '../../service/impl/nutrition/setNutrition/setNutrition.impl';
+import { setNutrition } from '../../service/impl/nutrition/setNutrition/setNutrition.impl';
 import { validate } from '../../middleware/globalValidator/globalValidator.md';
-import { validateNutritionCreation } from '../../utils/validators.md';
+import { validateNutritionCreation, validateUpdatedNutrition } from '../../utils/validators.md';
 import { showNutritions } from '../../service/impl/nutrition/showNutritions/showNutritions.impl';
 import { showNutrition } from '../../service/impl/nutrition/showNutrition/showNutrition.impl';
+import { updateNutrition } from '../../service/impl/nutrition/updateNutrition/updateNutrition.impl';
 const router = express.Router();
-router.post('/set-meal', authenticationToken, validate(validateNutritionCreation), setMeal);
+router.post('/set-nutrition', authenticationToken, validate(validateNutritionCreation), setNutrition);
 router.get('/show-nutritions', authenticationToken, showNutritions);
 router.get('/show-nutrition/:id', authenticationToken, showNutrition);
+router.put('/update-nutrition/:id', authenticationToken, validate(validateUpdatedNutrition), updateNutrition);
 export default router;
