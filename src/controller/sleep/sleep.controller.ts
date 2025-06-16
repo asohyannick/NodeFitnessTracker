@@ -3,6 +3,8 @@ import { authenticationToken } from '../../middleware/auth/auth.middleware';
 import { setSleepingDuration } from '../../service/impl/sleep/setSleepingDuration/setSleepingDurtion.impl';
 import { validate } from '../../middleware/globalValidator/globalValidator.md';
 import { validateSleepDuration } from '../../utils/validators.md';
+import { showSleepingDurations } from '../../service/impl/sleep/showSleepingDurations/showSleepingDurations.impl';
 const router = express.Router();
 router.post('/set-sleeping-duration', authenticationToken, validate(validateSleepDuration), setSleepingDuration);
+router.get('/sleeping-durations', authenticationToken, showSleepingDurations);
 export default router;
