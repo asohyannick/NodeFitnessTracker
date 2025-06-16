@@ -4,7 +4,9 @@ import { createChallenge } from '../../service/impl/challenge/createChallenge/cr
 import { validate } from '../../middleware/globalValidator/globalValidator.md';
 import { validateCreatedChallenge } from '../../utils/validators.md';
 import { showChallenges } from '../../service/impl/challenge/showChallenges/showChallenges.impl';
+import { showChallenge } from '../../service/impl/challenge/showChallenge/showChallenge.impl';
 const router = express.Router();
 router.post('/create-challenge', authenticationToken, validate(validateCreatedChallenge), createChallenge);
 router.get('/show-challenges', authenticationToken, showChallenges);
+router.get('/show-challenge/:id', authenticationToken, showChallenge);
 export default router;
