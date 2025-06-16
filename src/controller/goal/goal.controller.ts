@@ -3,6 +3,8 @@ import { authenticationToken } from '../../middleware/auth/auth.middleware';
 import { setGoal } from '../../service/impl/goal/setGoal/setGoal.impl';
 import { validate } from '../../middleware/globalValidator/globalValidator.md';
 import { validateGoalCreation } from '../../utils/validators.md';
+import { showGoals } from '../../service/impl/goal/showGoals/showGoals.impl';
 const router = express.Router();
 router.post('/set-goal', authenticationToken, validate(validateGoalCreation), setGoal);
+router.get('/show-goals', authenticationToken, showGoals);
 export default router;
