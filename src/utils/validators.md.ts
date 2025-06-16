@@ -72,7 +72,7 @@ const validateActivityCreation = Yup.object().shape({
 
 });
 
-const validateUpdatedActivityCreation = Yup.object().shape({
+const validateUpdatedActivity = Yup.object().shape({
     type: Yup.string().required("Type must be provided").trim().min(2),
     duration: Yup.number().required("Duration value must be provided").min(2.).integer(),
     caloriesBurned: Yup.number().required("Calories burned value must be provided").min(2).integer(),
@@ -103,7 +103,21 @@ const validateGoalCreation = Yup.object().shape({
         .oneOf(Object.values(FrequencyStatus)), // Validates against the enum values
     notes: Yup.string().required("Notes must be provided").trim().min(6, "Notes must be at least 6 characters long"),
     milestones: Yup.array().of(Yup.string().trim()).required('Milestones must be provided').min(1),
+});
 
+const validateUpdatedGoal = Yup.object().shape({
+    type: Yup.string().required("Type must be provided").trim().min(2),
+    target: Yup.number().required("Target value must be provided").min(2.).integer(),
+    currentProgress: Yup.number().required("Current Progress value must be provided").min(2).integer(),
+    deadline: Yup.date().required("Deadline must be provided"),
+    status: Yup.mixed()
+        .required("One value must be provided")
+        .oneOf(Object.values(GoalStatus)), // Validates against the enum values
+    frequency: Yup.mixed()
+        .required("One value must be provided")
+        .oneOf(Object.values(FrequencyStatus)), // Validates against the enum values
+    notes: Yup.string().required("Notes must be provided").trim().min(6, "Notes must be at least 6 characters long"),
+    milestones: Yup.array().of(Yup.string().trim()).required('Milestones must be provided').min(1),
 });
 
 
@@ -114,6 +128,7 @@ export {
     validateProfileRegistration,
     validateUpdatedProfileRegistration,
     validateActivityCreation,
-    validateUpdatedActivityCreation,
-    validateGoalCreation
+    validateUpdatedActivity,
+    validateGoalCreation,
+    validateUpdatedGoal
 }
