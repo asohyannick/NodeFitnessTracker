@@ -6,9 +6,11 @@ import { validateNutritionCreation, validateUpdatedNutrition } from '../../utils
 import { showNutritions } from '../../service/impl/nutrition/showNutritions/showNutritions.impl';
 import { showNutrition } from '../../service/impl/nutrition/showNutrition/showNutrition.impl';
 import { updateNutrition } from '../../service/impl/nutrition/updateNutrition/updateNutrition.impl';
+import { deleteNutrition } from '../../service/impl/nutrition/deleteNutrition/deleteNutrition.impl';
 const router = express.Router();
 router.post('/set-nutrition', authenticationToken, validate(validateNutritionCreation), setNutrition);
 router.get('/show-nutritions', authenticationToken, showNutritions);
 router.get('/show-nutrition/:id', authenticationToken, showNutrition);
 router.put('/update-nutrition/:id', authenticationToken, validate(validateUpdatedNutrition), updateNutrition);
+router.delete('/delete-nutrition/:id', authenticationToken, deleteNutrition);
 export default router;

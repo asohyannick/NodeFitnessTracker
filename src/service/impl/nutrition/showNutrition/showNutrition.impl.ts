@@ -6,7 +6,7 @@ const showNutrition = async (req: Request, res: Response): Promise<Response> => 
         const { id } = req.params;
       const nutrition = await Nutrition.findById(id);
       if (!nutrition) {
-        return res.status(StatusCodes.NOT_FOUND).json({message: "Nutrition has been fetched successfully", nutrition});
+        return res.status(StatusCodes.NOT_FOUND).json({message: "Nutrition doesn't exist", nutrition});
       }
       return res.status(StatusCodes.OK).json({message: "Nutrition has been fetched successfully", nutrition});
     } catch (error) {
