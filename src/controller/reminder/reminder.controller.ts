@@ -6,9 +6,11 @@ import { validateSendReminderMessage, validateUpdatedReminderMessage } from '../
 import { showReminders } from '../../service/impl/reminder/showReminders/showReminders.impl';
 import { showReminder } from '../../service/impl/reminder/showReminder/showReminder.impl';
 import { editAndUpdateReminder } from '../../service/impl/reminder/editAndUpdateReminder/editAndUpdateReminder.impl';
+import { deleteReminder } from '../../service/impl/reminder/deleteReminder/deleteReminder.impl';
 const router = express.Router();
 router.post('/send-reminder', authenticationToken, validate(validateSendReminderMessage), sendReminder);
 router.get('/show-reminders', authenticationToken, showReminders);
 router.get('/show-reminder/:id', authenticationToken, showReminder);
 router.put('/update-reminder/:id', authenticationToken, validate(validateUpdatedReminderMessage), editAndUpdateReminder);
+router.delete('/delete-reminder/:id', authenticationToken, deleteReminder);
 export default router;
