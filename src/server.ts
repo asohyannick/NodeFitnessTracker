@@ -2,6 +2,8 @@ import 'dotenv/config';
 // DB 
 import connectedToMongoDB from './config/dbConfig/databaseConfig.db';
 import express, { Application} from 'express';
+import http from 'http';
+import { Server } from 'socket.io';
 import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
@@ -48,6 +50,22 @@ app.use(`/api/${process.env.API_VERSION as string}/challenge`, challengeRoute);
 app.use(`/api/${process.env.API_VERSION as string}/device`, deviceRoute);
 app.use(`/api/${process.env.API_VERSION as string}/reminder`, reminderRoute);
 app.use(`/api/${process.env.API_VERSION as string}/notification`, notificationRoute);
+
+// Socket.io connection
+const server = http.createServer(app);
+const io = new Server(server);
+// Listen for socket connections
+io.on('connection', (socket) => {
+  console.log('A user connected:', socket.id);
+  // Handle disconnect
+  socket.on('disconnect', () => {
+    console.log('User disconnected:', socket.id);
+  });
+   // Send a notification to a specific user
+  socket.on('sendNotification', (notification) => {
+    io.to(socket.id).emit('notification', notification);
+  });
+});
 
 const APP_NAME: string = process.env.APP_NAME || 'NodeFitnessTracker'
 const APP_PORT: number | string = parseInt(process.env.APP_PORT  || '3030', 10);
