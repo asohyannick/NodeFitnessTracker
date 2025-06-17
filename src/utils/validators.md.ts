@@ -7,6 +7,7 @@ import { SleepProblemStatus, SleepQualityStatus } from '../service/interfac/slee
 import { WorkoutGoalPlanStatus } from '../service/interfac/workoutPlan/workoutPlan.interfac';
 import { ChallengeStatus } from '../service/interfac/challenge/challenge.interfac';
 import { DeviceStatus } from '../service/interfac/device/device.interfac';
+import { RecurrencePatternStatus, ReminderStatus } from '../service/interfac/reminder/reminder.interfac';
 const validateUserRegistration = Yup.object().shape({
     firstName: Yup.string().required("FirstName must be provided").trim().min(2),
     lastName: Yup.string().required("lastName must be provided").trim().min(2),
@@ -239,6 +240,23 @@ const validateUpdatedDevice = Yup.object().shape({
     batteryLevel: Yup.number().required('Battery level value must be provided').integer(),
     status: Yup.mixed().required('One value must be provided').oneOf(Object.values(DeviceStatus)),
 });
+
+const validateSendReminderMessage = Yup.object().shape({
+    message: Yup.string().required("Message must be provided").min(1).max(250),
+    reminderDate: Yup.date().required().min(new Date(), 'Reminder date must be in the future'),
+    isRecurring: Yup.boolean().optional(),
+    recurrencePattern: Yup.object().shape({
+        frequency: Yup.mixed()
+            .oneOf(Object.values(RecurrencePatternStatus))
+            .required('Frequency is required when recurrence pattern is specified'),
+        interval: Yup.number().optional().min(1, 'Interval must be at least 1'),
+    }).optional(),
+    status: Yup.mixed()
+        .oneOf(Object.values(ReminderStatus))
+        .required(),
+    snoozeDuration: Yup.number().optional().min(1, 'Snooze duration must be at least 1 minute'),
+});
+
 export {
     validateUserRegistration,
     validateUserLogin,
@@ -258,5 +276,6 @@ export {
     validateCreatedChallenge,
     validateUpdatedChallenge,
     validateCreatedDevice,
-    validateUpdatedDevice
+    validateUpdatedDevice,
+    validateSendReminderMessage
 }

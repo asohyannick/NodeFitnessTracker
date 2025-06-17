@@ -16,6 +16,7 @@ import sleepingCalendarRoute from './controller/sleep/sleep.controller';
 import workoutPlanRoute from './controller/workoutPlan/workoutPlan.controller';
 import challengeRoute from './controller/challenge/challenge.controller';
 import deviceRoute from './controller/device/device.controller';
+import reminderRoute from './controller/reminder/reminder.controller';
 const app: Application = express();
 // General Application Built-in Middleware 
 app.use(express.json());
@@ -40,6 +41,7 @@ app.use(`/api/${process.env.API_VERSION as string}/sleep`, sleepingCalendarRoute
 app.use(`/api/${process.env.API_VERSION as string}/workoutPlan`, workoutPlanRoute);
 app.use(`/api/${process.env.API_VERSION as string}/challenge`, challengeRoute);
 app.use(`/api/${process.env.API_VERSION as string}/device`, deviceRoute);
+app.use(`/api/${process.env.API_VERSION as string}/reminder`, reminderRoute);
 
 
 const APP_NAME: string = process.env.APP_NAME || 'NodeFitnessTracker'
