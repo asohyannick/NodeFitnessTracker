@@ -8,6 +8,7 @@ import { WorkoutGoalPlanStatus } from '../service/interfac/workoutPlan/workoutPl
 import { ChallengeStatus } from '../service/interfac/challenge/challenge.interfac';
 import { DeviceStatus } from '../service/interfac/device/device.interfac';
 import { RecurrencePatternStatus, ReminderStatus } from '../service/interfac/reminder/reminder.interfac';
+import { PriorityStatus, TypeStatus } from '../service/interfac/notification/notification.interfac';
 const validateUserRegistration = Yup.object().shape({
     firstName: Yup.string().required("FirstName must be provided").trim().min(2),
     lastName: Yup.string().required("lastName must be provided").trim().min(2),
@@ -273,6 +274,26 @@ const validateUpdatedReminderMessage = Yup.object().shape({
     snoozeDuration: Yup.number().optional().min(1, 'Snooze duration must be at least 1 minute'),
 });
 
+const validatePushNotification = Yup.object().shape({
+    message: Yup.string().required("Message must be provided").min(1).max(250),
+    isRead: Yup.object().optional(),
+    type: Yup.mixed().required('One value must be provided').oneOf(Object.values(TypeStatus)),
+    priority: Yup.mixed().required('One value must be provided').oneOf(Object.values(PriorityStatus)),
+    actionRequired: Yup.boolean().optional(),
+    date: Yup.date().required("Date must be provided")
+
+});
+
+const validateUpdatedPushNotification = Yup.object().shape({
+    message: Yup.string().required("Message must be provided").min(1).max(250),
+    isRead: Yup.object().optional(),
+    type: Yup.mixed().required('One value must be provided').oneOf(Object.values(TypeStatus)),
+    priority: Yup.mixed().required('One value must be provided').oneOf(Object.values(PriorityStatus)),
+    actionRequired: Yup.boolean().optional(),
+    date: Yup.date().required("Date must be provided")
+
+});
+
 export {
     validateUserRegistration,
     validateUserLogin,
@@ -294,5 +315,7 @@ export {
     validateCreatedDevice,
     validateUpdatedDevice,
     validateSendReminderMessage,
-    validateUpdatedReminderMessage
+    validateUpdatedReminderMessage,
+    validatePushNotification,
+    validateUpdatedPushNotification
 }

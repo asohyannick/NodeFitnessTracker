@@ -4,9 +4,13 @@ import { sendPushNoficationMessage } from '../../service/impl/notification/sendN
 import { showPushNoficationMessages } from '../../service/impl/notification/showNotifications/showNotifications.impl';
 import { showPushNoficationMessage } from '../../service/impl/notification/showNotification/showNotification.impl';
 import { editAndUpdatePushNoficationMessage } from '../../service/impl/notification/updateNotification/updateNotification.impl';
+import { deletePushNoficationMessage } from '../../service/impl/notification/deleteNotification/deleteNotification.impl';
+import { validate } from '../../middleware/globalValidator/globalValidator.md';
+import { validatePushNotification, validateUpdatedPushNotification } from '../../utils/validators.md';
 const router = express.Router();
-router.post('/send-notification', authenticationToken, sendPushNoficationMessage);
+router.post('/send-notification', authenticationToken, validate(validatePushNotification), sendPushNoficationMessage);
 router.get('/show-notifications', authenticationToken, showPushNoficationMessages);
 router.get('/show-notification/:id', authenticationToken, showPushNoficationMessage);
-router.put('/update-notification/:id', authenticationToken, editAndUpdatePushNoficationMessage);
+router.put('/update-notification/:id', authenticationToken, validate(validateUpdatedPushNotification), editAndUpdatePushNoficationMessage);
+router.delete('/delete-notification/:id', authenticationToken, deletePushNoficationMessage);
 export default router;
