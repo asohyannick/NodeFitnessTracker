@@ -257,6 +257,22 @@ const validateSendReminderMessage = Yup.object().shape({
     snoozeDuration: Yup.number().optional().min(1, 'Snooze duration must be at least 1 minute'),
 });
 
+const validateUpdatedReminderMessage = Yup.object().shape({
+    message: Yup.string().required("Message must be provided").min(1).max(250),
+    reminderDate: Yup.date().required().min(new Date(), 'Reminder date must be in the future'),
+    isRecurring: Yup.boolean().optional(),
+    recurrencePattern: Yup.object().shape({
+        frequency: Yup.mixed()
+            .oneOf(Object.values(RecurrencePatternStatus))
+            .required('Frequency is required when recurrence pattern is specified'),
+        interval: Yup.number().optional().min(1, 'Interval must be at least 1'),
+    }).optional(),
+    status: Yup.mixed()
+        .oneOf(Object.values(ReminderStatus))
+        .required(),
+    snoozeDuration: Yup.number().optional().min(1, 'Snooze duration must be at least 1 minute'),
+});
+
 export {
     validateUserRegistration,
     validateUserLogin,
@@ -277,5 +293,6 @@ export {
     validateUpdatedChallenge,
     validateCreatedDevice,
     validateUpdatedDevice,
-    validateSendReminderMessage
+    validateSendReminderMessage,
+    validateUpdatedReminderMessage
 }
