@@ -4,7 +4,9 @@ import { sendSetting } from '../../service/impl/setting/sendSetting/sendSetting.
 import { validate } from '../../middleware/globalValidator/globalValidator.md';
 import { validateSendSettingSchema } from '../../utils/validators.md';
 import { showSettings } from '../../service/impl/setting/showSettings/showSettings.impl';
+import { showSetting } from '../../service/impl/setting/showSetting/showSetting.impl';
 const router = express.Router();
 router.post('/send-setting', authenticationToken, validate(validateSendSettingSchema), sendSetting);
 router.get('/show-settings', authenticationToken, showSettings);
+router.get('/show-setting/:id', authenticationToken, showSetting);
 export default router;
