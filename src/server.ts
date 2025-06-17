@@ -3,11 +3,12 @@ import 'dotenv/config';
 import connectedToMongoDB from './config/dbConfig/databaseConfig.db';
 import express, { Application } from 'express';
 import http from 'http';
+import morgan from 'morgan';
 import { Server } from 'socket.io';
 import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
-import morgan from 'morgan';
+import rateLimit from 'express-rate-limit';
 // Routes
 import authRoute from './controller/auth/auth.controller';
 import profileRoute from './controller/profile/profile.controller';
@@ -22,39 +23,13 @@ import reminderRoute from './controller/reminder/reminder.controller';
 import notificationRoute from './controller/notification/notification.controller';
 import settingRoute from './controller/setting/setting.controller';
 const app: Application = express();
-// General Application Built-in Middleware 
+// General Application Built-in Middleware  and setup
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-//security middleware packages
-app.use(cors());
-app.use(helmet());
-app.use(compression());
-
-// Custom Application Middleware 
-import { serverError } from './middleware/serverError/serverError.middle';
-import { notFoundRoute } from './middleware/notFound/404.middle';
-if (process.env.NODE_ENV as string === 'development') {
-  app.use(morgan('dev'));
-}
-app.use(serverError);
-app.use(notFoundRoute);
-
-// Routes
-app.use(`/api/${process.env.API_VERSION as string}/auth`, authRoute);
-app.use(`/api/${process.env.API_VERSION as string}/profile`, profileRoute);
-app.use(`/api/${process.env.API_VERSION as string}/activity`, activityRoute);
-app.use(`/api/${process.env.API_VERSION as string}/goal`, goalRoute);
-app.use(`/api/${process.env.API_VERSION as string}/nutrition`, nutritionRoute);
-app.use(`/api/${process.env.API_VERSION as string}/sleep`, sleepingCalendarRoute);
-app.use(`/api/${process.env.API_VERSION as string}/workoutPlan`, workoutPlanRoute);
-app.use(`/api/${process.env.API_VERSION as string}/challenge`, challengeRoute);
-app.use(`/api/${process.env.API_VERSION as string}/device`, deviceRoute);
-app.use(`/api/${process.env.API_VERSION as string}/reminder`, reminderRoute);
-app.use(`/api/${process.env.API_VERSION as string}/notification`, notificationRoute);
-app.use(`/api/${process.env.API_VERSION as string}/setting`, settingRoute);
-
-
+const APP_NAME: string = process.env.APP_NAME || 'NodeFitnessTracker'
+const APP_PORT: number | string = parseInt(process.env.APP_PORT || '3030', 10);
+const API_VERSION: string | number = process.env.API_VERSION || 'v1';
+const APP_HOST: string | number = process.env.APP_HOST || 'localhost';
 // Socket.io connection
 const server = http.createServer(app);
 const io = new Server(server);
@@ -71,10 +46,45 @@ io.on('connection', (socket) => {
   });
 });
 
-const APP_NAME: string = process.env.APP_NAME || 'NodeFitnessTracker'
-const APP_PORT: number | string = parseInt(process.env.APP_PORT || '3030', 10);
-const API_VERSION: string | number = process.env.API_VERSION || 'v1';
-const APP_HOST: string | number = process.env.APP_HOST || 'localhost';
+//security middleware packages
+app.use(cors({
+  origin: process.env.UI as string || '*',
+  credentials: true,
+}));
+app.use(helmet());
+app.use(compression());
+const limiter = rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	limit: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
+	standardHeaders: 'draft-8', // draft-6: `RateLimit-*` headers; draft-7 & draft-8: combined `RateLimit` header
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
+	// store: ... , // Redis, Memcached, etc. See below.
+})
+app.use(limiter);
+// Custom Application Middleware 
+import { serverError } from './middleware/serverError/serverError.middle';
+import { notFoundRoute } from './middleware/notFound/404.middle';
+if (process.env.NODE_ENV as string === 'development') {
+  app.use(morgan('dev'));
+} 
+
+// Routes
+app.use(`/api/${process.env.API_VERSION as string}/auth`, authRoute);
+app.use(`/api/${process.env.API_VERSION as string}/profile`, profileRoute);
+app.use(`/api/${process.env.API_VERSION as string}/activity`, activityRoute);
+app.use(`/api/${process.env.API_VERSION as string}/goal`, goalRoute);
+app.use(`/api/${process.env.API_VERSION as string}/nutrition`, nutritionRoute);
+app.use(`/api/${process.env.API_VERSION as string}/sleep`, sleepingCalendarRoute);
+app.use(`/api/${process.env.API_VERSION as string}/workoutPlan`, workoutPlanRoute);
+app.use(`/api/${process.env.API_VERSION as string}/challenge`, challengeRoute);
+app.use(`/api/${process.env.API_VERSION as string}/device`, deviceRoute);
+app.use(`/api/${process.env.API_VERSION as string}/reminder`, reminderRoute);
+app.use(`/api/${process.env.API_VERSION as string}/notification`, notificationRoute);
+app.use(`/api/${process.env.API_VERSION as string}/setting`, settingRoute);
+
+app.use(notFoundRoute);
+app.use(serverError);
+
 async function serve() {
   try {
     await connectedToMongoDB(),
@@ -87,3 +97,4 @@ async function serve() {
 }
 
 serve();
+export default app;
