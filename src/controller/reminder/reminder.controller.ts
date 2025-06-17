@@ -4,7 +4,9 @@ import { sendReminder } from '../../service/impl/reminder/sendReminder/sendRemin
 import { validate } from '../../middleware/globalValidator/globalValidator.md';
 import { validateSendReminderMessage } from '../../utils/validators.md';
 import { showReminders } from '../../service/impl/reminder/showReminders/showReminders.impl';
+import { showReminder } from '../../service/impl/reminder/showReminder/showReminder.impl';
 const router = express.Router();
 router.post('/send-reminder', authenticationToken, validate(validateSendReminderMessage), sendReminder);
 router.get('/show-reminders', authenticationToken, showReminders);
+router.get('/show-reminder/:id', authenticationToken, showReminder);
 export default router;
