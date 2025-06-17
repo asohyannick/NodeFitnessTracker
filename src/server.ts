@@ -17,6 +17,7 @@ import workoutPlanRoute from './controller/workoutPlan/workoutPlan.controller';
 import challengeRoute from './controller/challenge/challenge.controller';
 import deviceRoute from './controller/device/device.controller';
 import reminderRoute from './controller/reminder/reminder.controller';
+import notificationRoute from './controller/notification/notification.controller';
 import { serverError } from './middleware/serverError/serverError.middle';
 import { notFoundRoute } from './middleware/notFound/404.middle';
 const app: Application = express();
@@ -46,7 +47,7 @@ app.use(`/api/${process.env.API_VERSION as string}/workoutPlan`, workoutPlanRout
 app.use(`/api/${process.env.API_VERSION as string}/challenge`, challengeRoute);
 app.use(`/api/${process.env.API_VERSION as string}/device`, deviceRoute);
 app.use(`/api/${process.env.API_VERSION as string}/reminder`, reminderRoute);
-
+app.use(`/api/${process.env.API_VERSION as string}/notification`, notificationRoute);
 
 const APP_NAME: string = process.env.APP_NAME || 'NodeFitnessTracker'
 const APP_PORT: number | string = parseInt(process.env.APP_PORT  || '3030', 10);
