@@ -1,8 +1,10 @@
 import express from 'express';
 import { authenticationToken } from '../../middleware/auth/auth.middleware';
 import { sendPushNoficationMessage } from '../../service/impl/notification/sendNotification/sendNotification.impl';
-import { showPushNoficationMessages } from '../../service/impl/notification/showNotifications/showNotification.impl';
+import { showPushNoficationMessages } from '../../service/impl/notification/showNotifications/showNotifications.impl';
+import { showPushNoficationMessage } from '../../service/impl/notification/showNotification/showNotification.impl';
 const router = express.Router();
 router.post('/send-notification', authenticationToken, sendPushNoficationMessage);
 router.get('/show-notifications', authenticationToken, showPushNoficationMessages);
+router.get('/show-notification/:id', authenticationToken, showPushNoficationMessage);
 export default router;
