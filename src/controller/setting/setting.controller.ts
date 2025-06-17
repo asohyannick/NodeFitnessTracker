@@ -6,9 +6,11 @@ import { validateSendSettingSchema, validateupdatedSettingSchema } from '../../u
 import { showSettings } from '../../service/impl/setting/showSettings/showSettings.impl';
 import { showSetting } from '../../service/impl/setting/showSetting/showSetting.impl';
 import { editAndUpdateSetting } from '../../service/impl/setting/updateSetting/updateSetting.impl';
+import { deleteSetting } from '../../service/impl/setting/deleteSetting/deleteSetting.impl';
 const router = express.Router();
 router.post('/send-setting', authenticationToken, validate(validateSendSettingSchema), sendSetting);
 router.get('/show-settings', authenticationToken, showSettings);
 router.get('/show-setting/:id', authenticationToken, showSetting);
 router.put('/update-setting/:id', authenticationToken, validate(validateupdatedSettingSchema), editAndUpdateSetting);
+router.delete('/delete-setting/:id', authenticationToken, deleteSetting);
 export default router;
