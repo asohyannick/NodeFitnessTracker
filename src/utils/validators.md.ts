@@ -9,6 +9,7 @@ import { ChallengeStatus } from '../service/interfac/challenge/challenge.interfa
 import { DeviceStatus } from '../service/interfac/device/device.interfac';
 import { RecurrencePatternStatus, ReminderStatus } from '../service/interfac/reminder/reminder.interfac';
 import { PriorityStatus, TypeStatus } from '../service/interfac/notification/notification.interfac';
+import { ActivityVisibilityStatus, LanguageStatus, ProfileVisibilityStatus, SearchVisibilityStatus, ThemeStatus, UnitsDistanceStatus, UnitsTemperatureStatus, UnitsWeightStatus } from '../service/interfac/setting/setting.interfac';
 const validateUserRegistration = Yup.object().shape({
     firstName: Yup.string().required("FirstName must be provided").trim().min(2),
     lastName: Yup.string().required("lastName must be provided").trim().min(2),
@@ -294,6 +295,80 @@ const validateUpdatedPushNotification = Yup.object().shape({
 
 });
 
+const validateSendSettingSchema = Yup.object().shape({
+    privacy: Yup.object().shape({
+        profileVisibility: Yup.mixed()
+            .oneOf(Object.values(ProfileVisibilityStatus))
+            .required(),
+        activityVisibility: Yup.mixed()
+            .oneOf(Object.values(ActivityVisibilityStatus))
+            .required(),
+        searchVisibility: Yup.mixed()
+            .oneOf(Object.values(SearchVisibilityStatus))
+            .optional(),
+    }).required(),
+    notifications: Yup.object().shape({
+        email: Yup.boolean().required(),
+        push: Yup.boolean().required(),
+        sms: Yup.boolean().optional(),
+    }).required(),
+    units: Yup.object().shape({
+        distance: Yup.mixed()
+            .oneOf(Object.values(UnitsDistanceStatus))
+            .required(),
+        weight: Yup.mixed()
+            .oneOf(Object.values(UnitsWeightStatus))
+            .required(),
+        temperature: Yup.mixed()
+            .oneOf(Object.values(UnitsTemperatureStatus))
+            .optional(),
+    }).required(),
+    language: Yup.mixed()
+        .oneOf(Object.values(LanguageStatus))
+        .optional(),
+    theme: Yup.mixed()
+        .oneOf(Object.values(ThemeStatus))
+        .optional(),
+    date: Yup.date().required("Date must be provided"),
+});
+
+const validateupdatedSettingSchema = Yup.object().shape({
+    privacy: Yup.object().shape({
+        profileVisibility: Yup.mixed()
+            .oneOf(Object.values(ProfileVisibilityStatus))
+            .required(),
+        activityVisibility: Yup.mixed()
+            .oneOf(Object.values(ActivityVisibilityStatus))
+            .required(),
+        searchVisibility: Yup.mixed()
+            .oneOf(Object.values(SearchVisibilityStatus))
+            .optional(),
+    }).required(),
+    notifications: Yup.object().shape({
+        email: Yup.boolean().required(),
+        push: Yup.boolean().required(),
+        sms: Yup.boolean().optional(),
+    }).required(),
+    units: Yup.object().shape({
+        distance: Yup.mixed()
+            .oneOf(Object.values(UnitsDistanceStatus))
+            .required(),
+        weight: Yup.mixed()
+            .oneOf(Object.values(UnitsWeightStatus))
+            .required(),
+        temperature: Yup.mixed()
+            .oneOf(Object.values(UnitsTemperatureStatus))
+            .optional(),
+    }).required(),
+    language: Yup.mixed()
+        .oneOf(Object.values(LanguageStatus))
+        .optional(),
+    theme: Yup.mixed()
+        .oneOf(Object.values(ThemeStatus))
+        .optional(),
+    date: Yup.date().required("Date must be provided"),
+});
+
 export {
     validateUserRegistration,
     validateUserLogin,
@@ -317,5 +392,7 @@ export {
     validateSendReminderMessage,
     validateUpdatedReminderMessage,
     validatePushNotification,
-    validateUpdatedPushNotification
+    validateUpdatedPushNotification,
+    validateSendSettingSchema,
+    validateupdatedSettingSchema
 }
