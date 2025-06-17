@@ -17,6 +17,8 @@ import workoutPlanRoute from './controller/workoutPlan/workoutPlan.controller';
 import challengeRoute from './controller/challenge/challenge.controller';
 import deviceRoute from './controller/device/device.controller';
 import reminderRoute from './controller/reminder/reminder.controller';
+import { serverError } from './middleware/serverError/serverError.middle';
+import { notFoundRoute } from './middleware/notFound/404.middle';
 const app: Application = express();
 // General Application Built-in Middleware 
 app.use(express.json());
@@ -30,6 +32,8 @@ app.use(compression());
 if (process.env.NODE_ENV as string === 'development') {
     app.use(morgan('dev'));
 }
+app.use(serverError);
+app.use(notFoundRoute);
 
 // Routes
 app.use(`/api/${process.env.API_VERSION as string}/auth`, authRoute);
